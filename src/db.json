@@ -1,0 +1,311 @@
+{
+  "user": [
+    {
+      "name": "lionel messi",
+      "phone": "+32334556664",
+      "country": "India",
+      "city": "Mumbai",
+      "password": "$2b$12$2R1j..eyGyOGkl5dSirPbe0AuxNCNctY5wqO2AipLzZRE8xWF8O5q",
+      "email": "lm@gmail.com",
+      "geo": {
+        "ip": "172.217.167.78",
+        "latitude": 18.9387711,
+        "longitude": 72.8353355,
+        "city": "Mumbai",
+        "country": "India"
+      },
+      "id": 1
+    },
+    {
+      "name": "cristaino ronaldo",
+      "phone": "+32334556664",
+      "country": "India",
+      "city": "Noida",
+      "password": "$2b$12$OWT/m4JO8Wcx7kcsSfXXFujp7u1LpeC3cWItEIUnlGpnTMkV3J5Wa",
+      "email": "cr7@gmail.com",
+      "geo": {
+        "ip": "172.217.167.78",
+        "latitude": 28.5726442,
+        "longitude": 77.3547609,
+        "city": "Noida",
+        "country": "India"
+      },
+      "id": 2
+    },
+    {
+      "name": "eden hazard",
+      "phone": "+32334556664",
+      "country": "India",
+      "city": "Delhi",
+      "password": "$2b$12$iiE14tP.yRxnB.HWyAx0le5gIgfpF4mXnPv3PDzJG8ATf8ChWqxei",
+      "email": "ed10@gmail.com",
+      "type": "register",
+      "geo": {
+        "ip": "172.217.167.78",
+        "latitude": 28.6517178,
+        "longitude": 77.2219388,
+        "city": "Delhi",
+        "country": "India"
+      },
+      "id": 3
+    }
+  ],
+  "products": [
+    {
+      "sku": "R36537494055",
+      "category": "home and appliance",
+      "price": 5000,
+      "weight": 6,
+      "quantity": 20,
+      "name": "refrigerator"
+    },
+    {
+      "sku": "R35749923055",
+      "category": "home and appliance",
+      "price": 15000,
+      "weight": 2,
+      "quantity": 10,
+      "name": "cooking gas"
+    },
+    {
+      "sku": "R36936464055",
+      "category": "clothing",
+      "price": 500,
+      "weight": 1,
+      "quantity": 24,
+      "name": "long sleeve shirts"
+    },
+    {
+      "sku": "R03746465855",
+      "category": "electronics",
+      "price": 600,
+      "weight": 0.4,
+      "quantity": 12,
+      "name": "home theatre"
+    }
+  ],
+  "cart": [],
+  "activites": [
+    {
+      "type": "like",
+      "user_data": {
+        "name": "lionel messi",
+        "phone": "+32334556664",
+        "country": "India",
+        "city": "Mumbai",
+        "email": "lm@gmail.com",
+        "geo": {
+          "ip": "172.217.167.78",
+          "latitude": 18.9387711,
+          "longitude": 72.8353355,
+          "city": "Mumbai",
+          "country": "India"
+        },
+        "id": 1
+      },
+      "tracking_id": "INF-xIb_F70ig",
+      "timestamp": "2020-06-01T17:38:25.710Z",
+      "product": [
+        {
+          "sku": "R35749923055",
+          "category": "home and appliance",
+          "price": 15000,
+          "weight": 2,
+          "quantity": 10,
+          "name": "cooking gas"
+        }
+      ],
+      "id": 1
+    },
+    {
+      "user_data": {
+        "name": "lionel messi",
+        "phone": "+32334556664",
+        "country": "India",
+        "city": "Mumbai",
+        "email": "lm@gmail.com",
+        "geo": {
+          "ip": "172.217.167.78",
+          "latitude": 18.9387711,
+          "longitude": 72.8353355,
+          "city": "Mumbai",
+          "country": "India"
+        },
+        "id": 1
+      },
+      "tracking_id": "INF-e7-nriyU3",
+      "timestamp": "2020-06-01T17:59:34.452Z",
+      "product": [
+        {
+          "sku": "R35749923055",
+          "category": "home and appliance",
+          "price": 15000,
+          "weight": 2,
+          "quantity": 10,
+          "name": "cooking gas"
+        }
+      ],
+      "id": 2
+    },
+    {
+      "user_data": {
+        "name": "lionel messi",
+        "phone": "+32334556664",
+        "country": "India",
+        "city": "Mumbai",
+        "email": "lm@gmail.com",
+        "geo": {
+          "ip": "172.217.167.78",
+          "latitude": 18.9387711,
+          "longitude": 72.8353355,
+          "city": "Mumbai",
+          "country": "India"
+        },
+        "id": 1
+      },
+      "tracking_id": "INF-mgQBVi4Ru",
+      "timestamp": "2020-06-01T18:00:02.080Z",
+      "product": [
+        {
+          "sku": "R35749923055",
+          "category": "home and appliance",
+          "price": 15000,
+          "weight": 2,
+          "quantity": 10,
+          "name": "cooking gas"
+        }
+      ],
+      "id": 3
+    },
+    {
+      "type": "add_to_cart",
+      "user_data": {
+        "name": "lionel messi",
+        "phone": "+32334556664",
+        "country": "India",
+        "city": "Mumbai",
+        "email": "lm@gmail.com",
+        "geo": {
+          "ip": "172.217.167.78",
+          "latitude": 18.9387711,
+          "longitude": 72.8353355,
+          "city": "Mumbai",
+          "country": "India"
+        },
+        "id": 1
+      },
+      "tracking_id": "INF-EYC73lzIr",
+      "timestamp": "2020-06-01T18:06:02.330Z",
+      "product": [
+        {
+          "sku": "R35749923055",
+          "category": "home and appliance",
+          "price": 15000,
+          "weight": 2,
+          "quantity": 10,
+          "name": "cooking gas"
+        },
+        {
+          "sku": "R222990023055",
+          "category": "home and appliance",
+          "price": 1000,
+          "weight": 0.3,
+          "quantity": 1,
+          "name": "cooking pot"
+        }
+      ],
+      "cart": {
+        "id": 245678,
+        "items": 2
+      },
+      "id": 4
+    },
+    {
+      "type": "add_to_cart",
+      "user_data": {
+        "name": "lionel messi",
+        "phone": "+32334556664",
+        "country": "India",
+        "city": "Mumbai",
+        "email": "lm@gmail.com",
+        "geo": {
+          "ip": "172.217.167.78",
+          "latitude": 18.9387711,
+          "longitude": 72.8353355,
+          "city": "Mumbai",
+          "country": "India"
+        },
+        "id": 1
+      },
+      "tracking_id": "INF-DGi2jHeqj",
+      "timestamp": "2020-06-01T18:07:04.217Z",
+      "product": [
+        {
+          "sku": "R35749923055",
+          "category": "home and appliance",
+          "price": 15000,
+          "weight": 2,
+          "quantity": 10,
+          "name": "cooking gas"
+        },
+        {
+          "sku": "R222990023055",
+          "category": "home and appliance",
+          "price": 1000,
+          "weight": 0.3,
+          "quantity": 1,
+          "name": "cooking pot"
+        }
+      ],
+      "cart": {
+        "id": 245678,
+        "items": 2
+      },
+      "id": 5
+    },
+    {
+      "type": "login",
+      "user_data": {
+        "name": "lionel messi",
+        "phone": "+32334556664",
+        "country": "India",
+        "city": "Mumbai",
+        "password": "$2b$12$2R1j..eyGyOGkl5dSirPbe0AuxNCNctY5wqO2AipLzZRE8xWF8O5q",
+        "email": "lm@gmail.com",
+        "geo": {
+          "ip": "172.217.167.78",
+          "latitude": 18.9387711,
+          "longitude": 72.8353355,
+          "city": "Mumbai",
+          "country": "India"
+        },
+        "id": 1
+      },
+      "tracking_id": "INF-wVDBYP0HJ",
+      "timestamp": "2020-06-01T18:32:19.845Z",
+      "id": 6
+    },
+    {
+      "type": "register",
+      "user_data": {
+        "name": "eden hazard",
+        "phone": "+32334556664",
+        "country": "India",
+        "city": "Delhi",
+        "password": "$2b$12$iiE14tP.yRxnB.HWyAx0le5gIgfpF4mXnPv3PDzJG8ATf8ChWqxei",
+        "email": "ed10@gmail.com",
+        "type": "register",
+        "geo": {
+          "ip": "172.217.167.78",
+          "latitude": 28.6517178,
+          "longitude": 77.2219388,
+          "city": "Delhi",
+          "country": "India"
+        }
+      },
+      "tracking_id": "INF-ej144USY2",
+      "timestamp": "2020-06-01T18:41:44.479Z",
+      "id": 7
+    }
+  ]
+}

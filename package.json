@@ -1,0 +1,37 @@
+{
+  "name": "activitytracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gidox1/activityTracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gidox1/activityTracker/issues"
+  },
+  "homepage": "https://github.com/gidox1/activityTracker#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bcrypt": "^4.0.1",
+    "body-parse": "^0.1.0",
+    "bookshelf": "^1.1.1",
+    "express": "^4.17.1",
+    "express-ip": "^1.0.4",
+    "ip-location": "^1.0.1",
+    "json-server": "^0.16.1",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.21.1",
+    "memjs": "^1.2.2",
+    "ngrok": "^3.2.7",
+    "node-geocoder": "^3.27.0",
+    "nodemon": "^2.0.4",
+    "shortid": "^2.2.15"
+  }
+}
