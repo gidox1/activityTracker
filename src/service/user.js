@@ -40,7 +40,6 @@ class User {
 
         return axios.get(json_server_url+`?email=${userData.email}`) 
                 .then(async res => {
-                    console.log(res.data, res.data.length)
                     if(res.data.length > 0) {
                         return {
                             status: false,
@@ -56,19 +55,18 @@ class User {
                     const tracker = await this.registerActivity(user)
 
                     return axios.post(json_server_url, userData)
-                        .then(Response => {
-                            console.log(Response)
+                        .then(() => {
                             return {
                                 status: true,
                                 message: 'user successfully created'
                             }
                         })
                         .catch(err => {
-                            console.log(err, "REIERIHIR")
+                            throw err
                         })
                 })
                 .catch(err => {
-                    console.log("AX ERR", err)
+                    return err
                 })
 
 
@@ -119,26 +117,19 @@ class User {
 
 
     async registerActivity(data) {
-        console.log(data, "DATYA IMMNNNN")
         const track_prefix = 'INF-';
         const tracking_id = track_prefix + shortId.generate();
         const type = data.type;
         const productDetails = data.product || 0;
         const user_email = data.email;
-        console.log(user_email)
         const userObject = await axios.get(json_server_url+`?email=${user_email}`) || {}
         const timestamp = new Date();
         
-        console.log("GOT", userObject.hasOwnProperty('data'), userObject)
 
         if(userObject.hasOwnProperty('data') && userObject.data[0] > 0) {
             delete userObject.data[0].password;
         }  
 
-        console.log("GOT", userObject.hasOwnProperty('data'))
-
-
-        console.log("HERERERE")
         const responseData = {
             type: type,
             user_data: userObject.data[0],

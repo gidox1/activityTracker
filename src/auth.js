@@ -39,7 +39,6 @@ class Authenticate {
     */
    async hashPassword (password) {
          const hash = await new Promise((resolve) => {
-             console.log(password, BCRYPT_SALT_ROUNDS)
             bcrypt.hash(password, BCRYPT_SALT_ROUNDS)
             .then(hashedPassword => {
                 return resolve(hashedPassword);
@@ -56,11 +55,9 @@ class Authenticate {
     * Bcrypt
     */
    async comparePassword(password, hash) {
-       console.log('comparing...', password, hash)
        const compare = await new Promise((resolve) => {
            bcrypt.compare(password, hash)
                 .then(result => {
-                    console.log('result', result);
                     return resolve(result);
                 })
                 .catch(error => {
@@ -68,7 +65,6 @@ class Authenticate {
                     return error;
                 })
        })
-       console.log(compare)
        return compare;
    }
 
