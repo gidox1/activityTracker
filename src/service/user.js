@@ -1,176 +1,143 @@
 'use strict';
 
-const axios = require('axios');
-const json_server_url = 'http://localhost:3000/user';
-const json_server_url_activities = 'http://localhost:3000/activites'
-const auth = require('../auth');
-const nodeGeocoder = require('node-geocoder');
 const dummyIP = '172.217.167.78';
-const options = {
-    provider: 'openstreetmap'
-};
-const geoCoder = nodeGeocoder(options);
 const shortId = require('shortid');
+const faker = require('faker');
+const logger = require('turbo-logger').createStream({})
+const events = require('events');
+const config = require('../config')
+const emitter = new events.EventEmitter();
+const track_prefix = 'INF-';
+const memcached = require('../memcached_client');
 
 
-class User {
+/**
+ * Function to build user mockdata with Faker
+ */
+async function buildUserData() {
+    const userData = {
+        email: faker.internet.email(),
+        name: faker.name.findName(),
+        geo: {
+            ip: dummyIP,
+            latitude: faker.address.latitude(),
+            longitude: faker.address.longitude(),
+            country: faker.address.country(),
+            state: faker.address.state(),
+        },
+        tracking_id: track_prefix + shortId.generate(),
+        timestamp : new Date()
+    };
+    return await userData;
+}
 
-    async create(userData) {
-        const ipString = userData.ipObject.ip.split('')
-        const name = userData.name.toLowerCase()
-        const hashedPassword = await new auth().hashPassword(userData.password);
-        userData.password = hashedPassword;
-        const location = await geoCoder.geocode(`${userData.city} ${userData.country}`)
-        userData.name = name;
-        const geoDetails = {
-            ip: userData.ipObject.ip,
-            latitude: location[0].latitude || 0,
-            longitude: location[0].longitude || 0,
-            city: userData.city,
-            country: userData.country
+
+
+/**
+ * Function to build Cart Data
+ */
+async function buildCartData() {
+    const rand = config.randomIntFromInterval(1,10);
+    const productArray = []
+
+    for (let i = 0; i<rand; i++) {
+        const items = {
+            name: faker.commerce.productName(),
+            quantity: config.randomIntFromInterval(1,50),
+            weight: config.randomIntFromInterval(1,10),
+            price: faker.commerce.price()       
         }
-        
-        delete userData.ipObject;
-
-        if(ipString.length < 5) {
-            geoDetails.ip = dummyIP;
-        }
-
-        userData.geo = geoDetails;
-
-        return axios.get(json_server_url+`?email=${userData.email}`) 
-                .then(async res => {
-                    if(res.data.length > 0) {
-                        return {
-                            status: false,
-                            message: "user already exists"
-                        }
-                    }
-
-                    const user = {
-                        user_details : userData,
-                        type: userData.type,
-                        email: userData.email
-                    }
-                    const tracker = await this.registerActivity(user)
-
-                    return axios.post(json_server_url, userData)
-                        .then(() => {
-                            return {
-                                status: true,
-                                message: 'user successfully created'
-                            }
-                        })
-                        .catch(err => {
-                            throw err
-                        })
-                })
-                .catch(err => {
-                    return err
-                })
-
-
+        productArray.push(items);
     }
 
-
-
-    async login(userData) {
-        const {email, password} = userData;
-        const userObject = await axios.get(json_server_url+`?email=${userData.email}`) || 0
-        const hashedPassword = userObject.data[0].password || 0;
-        const compare = await new auth().comparePassword(userData.password, hashedPassword);
-        const checkParams = {email: userObject.data[0].email, password: userObject.data[0].password};
-        const userParams = {email, password};
-
-
-        if(!compare) {
-            return {
-                status: false,
-                message: "Invalid email or password"
-            }
-        }
-
-        const user = {
-            user_details :  userObject.data[0],
-            type: userData.type,
-            email: userParams.email
-        }
-        const tracker = await this.registerActivity(user)        
-        const userToken = await new auth().getToken(userParams, checkParams, userObject.data[0]);
-        return {
-            status: true,
-            message: 'successfully logged in',
-            token: userToken
-        }
+    const cart = {
+        id : Math.floor(Math.random()*90000) + 10000,
+        products: productArray
     }
+    return await cart;
+}
 
 
-    async likeProduct(data) {
-      return this.registerActivity(data)
+/**
+ * Function to push to Memcached
+ * @param {Object} data 
+ * @param {String} key 
+ */
+async function pushToMemcached(data, key) {
+    await memcached.set(key, data, 300, function (err) {
+        if(err) logger.error(err);
+    });
+
+    await memcached.get(key, function (err, data) {
+        logger.log("got data ", data, "\n\n")
+    });
+}
+
+
+
+/**
+ * Function to register and simulate each event
+ */
+async function trigger() {
+    const eventTypes = ['login', 'register', 'add_to_cart', 'like'];
+    const reference = ['creiteo', 'google_ads', 'facebook_ads']
+    const randomIndex = config.randomIntFromInterval(0,3);
+    let type = eventTypes[randomIndex];
+    const referenceChosen = reference[randomIndex]
+    type = 'add_to_cart';
+
+    emitter.on('login', async function () {
+        const data = await buildUserData();
+        data.type = type;
+        data.session_id = shortId.generate() + '_' + new Date();
+        const key = `${data.type}_${data.tracking_id}${data.type}`;
+        logger.log(`Registering event ${data.type}_${data.tracking_id}${data.type}`)
+        pushToMemcached(data, key);
+    });
+
+    emitter.on('register', async function () {
+        const data = await buildUserData();
+        data.type = type;
+        data.references = referenceChosen;
+        const key = `${data.type}_${data.tracking_id}${data.type}`;
+        logger.log(`Registering event ${data.type}_${data.tracking_id}${data.type}`)
+        pushToMemcached(data, key);
+    });
+
+
+    emitter.on('add_to_cart', async function () {
+        const data = await buildUserData();
+        data.type = type;
+        data.references = referenceChosen;
+        const key = `${data.type}_${data.tracking_id}${data.type}`;
+        logger.log(`Registering event ${data.type}_${data.tracking_id}${data.type}`)
+        data.cart = await buildCartData();
+        pushToMemcached(data, key);
+    });
+
+    triggerEmitter(type)
+}
+
+
+/**
+ * Function to Trigger events
+ * @param {String} type 
+ */
+function triggerEmitter(type) {
+    console.log("got here with", type)
+    switch(type) {
+        case 'login':
+            emitter.emit('login', {});
+        case 'register':
+            emitter.emit('register', {});
+        case 'add_to_cart':
+            emitter.emit('add_to_cart', {});
+        break
     }
+}
 
 
-    async addToCart(data) {
-        return this.registerActivity(data)
-    }
-
-
-
-    async registerActivity(data) {
-        const track_prefix = 'INF-';
-        const tracking_id = track_prefix + shortId.generate();
-        const type = data.type;
-        const productDetails = data.product || 0;
-        const user_email = data.email;
-        const userObject = await axios.get(json_server_url+`?email=${user_email}`) || {}
-        const timestamp = new Date();
-        
-
-        if(userObject.hasOwnProperty('data') && userObject.data[0] > 0) {
-            delete userObject.data[0].password;
-        }  
-
-        const responseData = {
-            type: type,
-            user_data: userObject.data[0],
-            tracking_id,
-            timestamp: timestamp,
-            product: productDetails
-        }
-
-        if(data.type == 'add_to_cart') {
-            const cartDetails = data.cart;
-            responseData.cart = cartDetails;
-            responseData.cart.items = productDetails.length
-        }
-        else if(data.type == 'register' || data.type == 'login') {
-            delete responseData.product
-            responseData.user_data = data.user_details
-        }
-        else {
-            return {
-                status: false,
-                message: 'Invalid activity'
-            }    
-        }
-
-        return axios.post(json_server_url_activities, responseData)
-                .then(() => {
-                    return {
-                        status: true,
-                        message: 'Activity successfully registered'
-                    }                
-                })
-                .catch(err => {
-                    return {
-                        status: false,
-                        message: 'Error. Activity could not be registered'
-                    }                    
-                })
-    }
-
-
-
-} 
-
-module.exports = User;
+//Expose trigger method
+module.exports = {
+    trigger
+};

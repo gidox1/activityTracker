@@ -15,13 +15,6 @@ app.use(expressip().getIpInfoMiddleware);
 
 app.set("PORT", PORT);
 
-app.get('*', (req, res) => {
-    const ipInfo = req.ipInfo;
-    res.send({
-        message: "Route Healthy",
-    });
-});
-
 app.use('/track', main_route);
 
 const server = http.createServer(app);

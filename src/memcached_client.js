@@ -1,16 +1,13 @@
-var Memcached = require('memcache');
+const Memcached = require('memcached');
 Memcached.config.poolSize = 25;
+const memcached = new Memcached();
 
-var memcached = new Memcached('localhost:9000', {retries:10,retry:10000,remove:true});
 
-memcached.set('foo', 'bar', 1200, function (err) { 
-    console.log(err)
-});
-
-memcached.get('foo',(err, value, key) => {
-    if (value != null) {
-        console.log(value.toString());
+memcached.connect( 'localhost:11211', function( err, conn ){
+    if( err ) {
+    console.log( conn.server,'error while memcached connection!!');
     }
 });
+
 
 module.exports = memcached

@@ -1,0 +1,6 @@
+{
+	"maxRequests": 200,
+	"concurrency": 10
+	"timeout": 20,
+    "requestsPerSecond": 10
+}
