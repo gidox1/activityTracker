@@ -84,7 +84,6 @@ async function trigger() {
     const randomIndex = config.randomIntFromInterval(0,3);
     let type = eventTypes[randomIndex];
     const referenceChosen = reference[randomIndex]
-    type = 'add_to_cart';
 
     emitter.on('login', async function () {
         const data = await buildUserData();
