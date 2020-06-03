@@ -124,7 +124,6 @@ async function trigger() {
  * @param {String} type 
  */
 function triggerEmitter(type) {
-    console.log("got here with", type)
     switch(type) {
         case 'login':
             emitter.emit('login', {});
